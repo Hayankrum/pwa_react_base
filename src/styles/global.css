@@ -16,12 +16,36 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  /* remove flash azul ao tocar (mobile/PWA) */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: var(--bg-main);
   color: var(--text-main);
   font-family: "Inter", Arial, sans-serif;
+}
+
+/* Remove caixa azul de foco padrão */
+button,
+a,
+input,
+textarea,
+select {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* opcional: foco customizado acessível */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 /* 🔥 TODOS OS SVG DO PROJETO */
@@ -32,7 +56,6 @@ svg {
   transition: 0.2s;
 }
 
-/* hover leve opcional */
 svg:hover {
   opacity: 0.8;
 }
