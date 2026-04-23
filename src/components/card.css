@@ -1,0 +1,61 @@
+/* GRID PADRÃO */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: #1a1d26;
+  height: 160px;
+  border-radius: 12px;
+  padding: 15px;
+
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* TAG */
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.tag.client {
+  background: #ff6b6b;
+}
+
+.tag.lead {
+  background: #6ec1ff;
+}
+
+/* TEXTO */
+.info .first {
+  margin: 0;
+  color: #aaa;
+}
+
+.info .last {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

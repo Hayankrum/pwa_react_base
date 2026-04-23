@@ -1,0 +1,23 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BASE */
+body {
+  background: #0f1117;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* SCROLLBAR (opcional, mas bonito) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 10px;
+}
