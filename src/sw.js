@@ -11,8 +11,32 @@ import {
 
 clientsClaim()
 
-// 🔥 arquivos buildados (Vite injecta isso automaticamente)
+// ===============================
+// 🔥 PRECACHE (arquivos do build)
+// ===============================
 precacheAndRoute(self.__WB_MANIFEST)
+
+
+// ===============================
+// ⚡ FORÇA ATUALIZAÇÃO IMEDIATA
+// ===============================
+self.addEventListener('install', () => {
+  self.skipWaiting()
+})
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    (async () => {
+      await clients.claim()
+
+      // 🧹 limpa caches antigos (EVITA versão velha travada)
+      const keys = await caches.keys()
+      await Promise.all(keys.map((key) => caches.delete(key)))
+
+      console.log('[SW] Ativo, cache limpo e controlando a página')
+    })()
+  )
+})
 
 
 // ===============================
@@ -21,8 +45,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 registerRoute(
   ({ request }) => request.mode === 'navigate',
   new NetworkFirst({
-    cacheName: 'pages-cache',
-    networkTimeoutSeconds: 3
+    cacheName: 'pages-cache'
   })
 )
 
@@ -39,7 +62,7 @@ registerRoute(
 
 
 // ===============================
-// 🌐 API (AXIOS / BACKEND)
+// 🌐 API (BACKEND / AXIOS)
 // ===============================
 registerRoute(
   ({ url }) => url.pathname.startsWith('/api/'),
@@ -47,13 +70,3 @@ registerRoute(
     cacheName: 'api-cache'
   })
 )
-
-
-// ===============================
-// ⚡ FORÇA ATUALIZAÇÃO IMEDIATA
-// ===============================
-self.skipWaiting()
-
-self.addEventListener('activate', () => {
-  console.log('[SW] Ativo e controlando a página')
-})
