@@ -1,13 +1,28 @@
+:root {
+  --bg-main: #000000;      /* preto real */
+  --bg-secondary: #151821; /* sidebar + card */
+  --bg-input: #1c1f2a;
+
+  --border: #222;
+
+  --text-main: #e5e5e5;
+  --text-soft: #9ca3af;
+
+  --accent: #d6c7a1; /* BEGE (substitui o azul) */
+}
+
 .app {
   display: flex;
   min-height: 100vh;
+  background: var(--bg-main);
 }
 
-/* SIDEBAR DESKTOP */
+/* SIDEBAR */
 .sidebar {
   width: 70px;
   height: 100vh;
-  background: #151821;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
 
   display: flex;
   flex-direction: column;
@@ -21,54 +36,47 @@
 
 /* ITENS */
 .item {
-  text-decoration: none;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-/* SVG PADRÃO */
+/* ICONES */
 .item svg {
   width: 22px;
   height: 22px;
-  stroke: #cbd5e1;
+  stroke: #8b8f98;
   stroke-width: 1.6;
   fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
   transition: 0.2s;
 }
 
-/* HOVER */
-.item:hover svg {
-  stroke: #6ec1ff;
-}
-
-/* ATIVO */
+/* HOVER + ATIVO (BEGE) */
+.item:hover svg,
 .item.active svg {
-  stroke: #6ec1ff;
+  stroke: var(--accent);
 }
 
 /* CONTEÚDO */
 .content {
   flex: 1;
-  padding: 20px;
+  padding: 25px;
 }
 
-/* TOPO */
-.topbar {
+/* TITULO MENOR */
+.topbar h2 {
+  font-size: 15px;
+  font-weight: 500;
   margin-bottom: 20px;
 }
 
-/* CONTEÚDO INTERNO */
+/* PAGE */
 .page {
   padding-bottom: 40px;
 }
 
-/* 📱 MOBILE */
-/* 📱 MOBILE */
+/* MOBILE */
 @media (max-width: 768px) {
-
   .app {
     display: block;
   }
@@ -76,16 +84,14 @@
   .sidebar {
     position: fixed;
     bottom: 0;
-    top: auto;
-    left: 0;
     width: 100%;
     height: 60px;
 
     flex-direction: row;
-    justify-content: center;  /* Mude de space-around para center */
-    gap: 50px;  /* Adicione um gap menor entre os botões */
-    
-    border-top: 1px solid #222;
+    justify-content: center;
+    gap: 40px;
+
+    border-top: 1px solid var(--border);
     z-index: 1000;
   }
 

@@ -11,7 +11,7 @@ const FilterIcon = () => (
 );
 
 const GridIcon = () => (
-  <svg viewBox="0 0 24 24">
+  <svg viewBox="0 0 24 24" >
     <rect x="4" y="4" width="6" height="6" />
     <rect x="14" y="4" width="6" height="6" />
     <rect x="4" y="14" width="6" height="6" />

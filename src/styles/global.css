@@ -1,3 +1,16 @@
+:root {
+  --bg-main: #0b0d12;
+  --bg-sidebar: #151821;
+  --bg-card: #151821;
+  --bg-input: #1c1f2a;
+  --border: #222530;
+
+  --text-main: #e5e7eb;
+  --text-soft: #9ca3af;
+
+  --accent: #d6c7a1; /* BEGE */
+}
+
 /* RESET */
 * {
   margin: 0;
@@ -5,14 +18,26 @@
   box-sizing: border-box;
 }
 
-/* BASE */
 body {
-  background: #0f1117;
-  font-family: Arial, sans-serif;
-  color: white;
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: "Inter", Arial, sans-serif;
 }
 
-/* SCROLLBAR (opcional, mas bonito) */
+/* 🔥 TODOS OS SVG DO PROJETO */
+svg {
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 1.6;
+  transition: 0.2s;
+}
+
+/* hover leve opcional */
+svg:hover {
+  opacity: 0.8;
+}
+
+/* SCROLL */
 ::-webkit-scrollbar {
   width: 6px;
 }

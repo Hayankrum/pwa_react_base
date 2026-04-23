@@ -1,7 +1,9 @@
+/* CONTAINER */
 .home {
   padding: 10px;
 }
 
+/* HEADER */
 .home-header {
   display: flex;
   justify-content: space-between;
@@ -10,36 +12,42 @@
 }
 
 .home-header h2 {
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .home-header span {
-  font-size: 12px;
-  color: #888;
+  font-size: 11px;
+  color: var(--text-soft);
 }
 
+/* BOTÕES */
 .actions {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .actions button {
-  background: #1a1d26;
-  border: none;
-  margin-left: 8px;
-  padding: 8px;
-  border-radius: 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 7px;
   cursor: pointer;
+  border-radius: 0;
+  color: var(--text-soft); /* 🔥 ESSENCIAL */
+  transition: 0.2s;
 }
 
-.actions svg {
-  width: 18px;
-  height: 18px;
-  stroke: #cbd5e1;
-  stroke-width: 1.6;
-  fill: none;
+/* 🔥 ÍCONES (FORÇA TUDO) */
+.actions button svg,
+.actions button svg * {
+  stroke: currentColor !important;
+  fill: currentColor !important;
 }
 
-.actions button:hover svg {
-  stroke: #6ec1ff;
+/* HOVER */
+.actions button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 0.9;
 }

@@ -1,0 +1,70 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-main);
+}
+
+.login-card {
+  width: 380px;
+  background: var(--bg-card);
+  padding: 40px;
+  border-radius: 16px; /* pode trocar pra 0 se quiser quadrado */
+  border: 1px solid var(--border);
+}
+
+.login-header h2 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 25px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: white;
+  font-size: 13px;
+}
+
+.login-card input::placeholder {
+  color: #6b7280;
+}
+
+.forgot {
+  font-size: 12px;
+  color: var(--text-soft);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  background: #e5e7eb;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.register {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.register span {
+  color: var(--accent);
+  cursor: pointer;
+}
