@@ -3,27 +3,31 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  base: '/pwa_react_base/', // 🔥 ESSENCIAL
+  base: '/pwa_react_base/',
 
   plugins: [
     react(),
+
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt', // controle de update
+
+      strategies: 'injectManifest',
+
+      srcDir: 'src',
+      filename: 'sw.js',
 
       manifest: {
         name: 'PWA React Base',
         short_name: 'PWA Base',
-        description: 'Template React com PWA',
+        description: 'Template React com PWA avançada',
         theme_color: '#1a1d26',
         background_color: '#1a1d26',
         display: 'standalone',
-
-        // 🔥 MUITO IMPORTANTE
         start_url: '/pwa_react_base/',
 
         icons: [
           {
-            src: 'icon-192.png', // 🔥 SEM /
+            src: 'icon-192.png',
             sizes: '192x192',
             type: 'image/png'
           },
