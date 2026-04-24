@@ -2,7 +2,7 @@
 
 import { clientsClaim } from 'workbox-core'
 import { precacheAndRoute } from 'workbox-precaching'
-import { registerRoute } from 'workbox-routing'
+import { registerRoute, setCatchHandler } from 'workbox-routing'
 import {
   NetworkFirst,
   CacheFirst,
@@ -18,7 +18,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 
 
 // ===============================
-// ⚡ FORÇA ATUALIZAÇÃO IMEDIATA
+// ⚡ ATIVA IMEDIATAMENTE
 // ===============================
 self.addEventListener('install', () => {
   self.skipWaiting()
@@ -29,7 +29,12 @@ self.addEventListener('activate', (event) => {
     (async () => {
       await clients.claim()
 
-      const cacheWhitelist = ['pages-cache', 'images-cache', 'api-cache']
+      const cacheWhitelist = [
+        'pages-cache',
+        'images-cache',
+        'static-resources',
+        'api-cache'
+      ]
 
       const keys = await caches.keys()
       await Promise.all(
@@ -47,36 +52,31 @@ self.addEventListener('activate', (event) => {
 
 
 // ===============================
-// 🌐 ROTAS DE PÁGINA (React Router)
+// 🌐 PÁGINAS (APP SHELL)
 // ===============================
+const networkFirst = new NetworkFirst({
+  cacheName: 'pages-cache',
+  networkTimeoutSeconds: 3
+})
+
 registerRoute(
   ({ request }) => request.mode === 'navigate',
-  async ({ event }) => {
-    const cache = await caches.open('pages-cache')
+  (args) => networkFirst.handle(args)
+)
 
-    try {
-      // tenta buscar da internet
-      const networkResponse = await fetch(event.request)
 
-      // salva no cache
-      cache.put(event.request, networkResponse.clone())
+// ===============================
+// 📦 JS, CSS, MANIFEST
+// ===============================
+registerRoute(
+  ({ request }) =>
+    request.destination === 'script' ||
+    request.destination === 'style' ||
+    request.destination === 'manifest',
 
-      return networkResponse
-
-    } catch (error) {
-      // 🔥 se falhar (offline)
-
-      // tenta pegar a mesma página do cache
-      const cachedResponse = await cache.match(event.request)
-
-      if (cachedResponse) {
-        return cachedResponse
-      }
-
-      // fallback final → index (React abre e redireciona)
-      return caches.match('/pwa_react_base/index.html')
-    }
-  }
+  new CacheFirst({
+    cacheName: 'static-resources'
+  })
 )
 
 
@@ -92,7 +92,7 @@ registerRoute(
 
 
 // ===============================
-// 🌐 API (BACKEND / AXIOS)
+// 🌐 API (pra quando usar depois)
 // ===============================
 registerRoute(
   ({ url }) => url.pathname.startsWith('/api/'),
@@ -100,3 +100,15 @@ registerRoute(
     cacheName: 'api-cache'
   })
 )
+
+
+// ===============================
+// 🚨 FALLBACK GLOBAL (CRÍTICO)
+// ===============================
+setCatchHandler(async ({ event }) => {
+  if (event.request.mode === 'navigate') {
+    return caches.match('/pwa_react_base/index.html')
+  }
+
+  return Response.error()
+})

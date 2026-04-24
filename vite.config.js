@@ -9,12 +9,38 @@ export default defineConfig({
     react(),
 
     VitePWA({
-      registerType: 'autoUpdate', // controle de update
+      registerType: 'autoUpdate',
 
-      strategies: 'injectManifest',
+      // 🔥 TROCA AQUI
+      strategies: 'generateSW',
 
-      srcDir: 'src',
-      filename: 'sw.js',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
+
+        navigateFallback: 'index.html',
+
+        navigateFallbackDenylist: [/^\/api\//],
+
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'image',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+            },
+          },
+          {
+            urlPattern: ({ request }) =>
+              request.destination === 'script' ||
+              request.destination === 'style' ||
+              request.destination === 'document',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'static-resources',
+            },
+          },
+        ],
+      },
 
       manifest: {
         name: 'PWA React Base',
