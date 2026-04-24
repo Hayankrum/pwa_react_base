@@ -52,11 +52,29 @@ self.addEventListener('activate', (event) => {
 registerRoute(
   ({ request }) => request.mode === 'navigate',
   async ({ event }) => {
+    const cache = await caches.open('pages-cache')
+
     try {
-      const response = await fetch(event.request)
-      return response
+      // tenta buscar da internet
+      const networkResponse = await fetch(event.request)
+
+      // salva no cache
+      cache.put(event.request, networkResponse.clone())
+
+      return networkResponse
+
     } catch (error) {
-      return caches.match('/pwa_react_base/') 
+      // 🔥 se falhar (offline)
+
+      // tenta pegar a mesma página do cache
+      const cachedResponse = await cache.match(event.request)
+
+      if (cachedResponse) {
+        return cachedResponse
+      }
+
+      // fallback final → index (React abre e redireciona)
+      return caches.match('/pwa_react_base/')
     }
   }
 )
