@@ -3,17 +3,23 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import "./styles/global.css"
 
-// 🔥 PWA register avançado
+// 🔥 PWA - atualização automática SEM prompt
 import { registerSW } from 'virtual:pwa-register'
 
-const updateSW = registerSW({
-  onNeedRefresh() {
-    const ok = confirm("Nova versão disponível. Atualizar agora?")
-    if (ok) updateSW(true)
-  },
+// força atualizar sempre que tiver nova versão
+registerSW({
+  immediate: true,
 
   onOfflineReady() {
     console.log("🔥 App pronto para uso offline")
+  },
+
+  onRegistered(swRegistration) {
+    console.log("✅ Service Worker registrado:", swRegistration)
+  },
+
+  onRegisterError(error) {
+    console.error("❌ Erro ao registrar SW:", error)
   }
 })
 

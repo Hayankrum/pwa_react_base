@@ -56,7 +56,7 @@ registerRoute(
       const response = await fetch(event.request)
       return response
     } catch (error) {
-      return caches.match('/pwa_react_base/index.html')
+      return caches.match('/pwa_react_base/') 
     }
   }
 )
