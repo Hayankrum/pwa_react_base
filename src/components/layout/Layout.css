@@ -99,5 +99,7 @@
 
   .content {
     padding-bottom: 80px;
+    padding: 10px 8px 80px; /* topo | lados | bottom */
   }
+
 }
