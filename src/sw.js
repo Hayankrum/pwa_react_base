@@ -29,11 +29,18 @@ self.addEventListener('activate', (event) => {
     (async () => {
       await clients.claim()
 
-      // 🧹 limpa caches antigos (EVITA versão velha travada)
-      const keys = await caches.keys()
-      await Promise.all(keys.map((key) => caches.delete(key)))
+      const cacheWhitelist = ['pages-cache', 'images-cache', 'api-cache']
 
-      console.log('[SW] Ativo, cache limpo e controlando a página')
+      const keys = await caches.keys()
+      await Promise.all(
+        keys.map((key) => {
+          if (!cacheWhitelist.includes(key)) {
+            return caches.delete(key)
+          }
+        })
+      )
+
+      console.log('[SW] Ativo e caches válidos mantidos')
     })()
   )
 })
@@ -44,9 +51,14 @@ self.addEventListener('activate', (event) => {
 // ===============================
 registerRoute(
   ({ request }) => request.mode === 'navigate',
-  new NetworkFirst({
-    cacheName: 'pages-cache'
-  })
+  async ({ event }) => {
+    try {
+      const response = await fetch(event.request)
+      return response
+    } catch (error) {
+      return caches.match('/pwa_react_base/index.html')
+    }
+  }
 )
 
 

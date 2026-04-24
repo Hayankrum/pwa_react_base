@@ -40,8 +40,8 @@ export default function Home() {
       {/* HEADER */}
       <div className="home-header">
         <div>
-          <h2>Customers</h2>
-          <span>All Types • 11 of 2,337 contacts</span>
+          <h2>Feed</h2>
+          <span>numero de posts</span>
         </div>
 
         <div className="actions">

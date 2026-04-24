@@ -1,9 +1,10 @@
 import StatusPage from "../components/StatusPage";
+import offlineIcon from "../../assets/icons/offline.png";
 
 export default function Offline() {
   return (
     <StatusPage
-      icon="/assets/icons/offline.png"
+      icon={offlineIcon}
       title="Servidor desconectado"
       subtitle="Tentando reconectar com o servidor..."
     />
