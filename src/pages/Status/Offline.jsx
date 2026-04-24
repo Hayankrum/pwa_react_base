@@ -1,4 +1,4 @@
-import StatusPage from "../components/StatusPage";
+import StatusPage from "../../components/StatusPage";
 import offlineIcon from "../../assets/icons/offline.png";
 
 export default function Offline() {

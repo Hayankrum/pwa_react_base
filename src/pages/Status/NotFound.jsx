@@ -1,4 +1,4 @@
-import StatusPage from "../components/StatusPage";
+import StatusPage from "../../components/StatusPage";
 import notFoundIcon from "../../assets/icons/404.png";
 
 export default function NotFound() {

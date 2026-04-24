@@ -1,4 +1,4 @@
-import StatusPage from "../components/StatusPage";
+import StatusPage from "../../components/StatusPage";
 import loadingIcon from "../../assets/icons/loading.gif";
 
 export default function Loading() {
