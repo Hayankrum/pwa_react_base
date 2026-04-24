@@ -74,7 +74,7 @@ registerRoute(
       }
 
       // fallback final → index (React abre e redireciona)
-      return caches.match('/pwa_react_base/')
+      return caches.match('/pwa_react_base/index.html')
     }
   }
 )
