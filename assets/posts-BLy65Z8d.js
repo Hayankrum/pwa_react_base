@@ -1,0 +1,1 @@
+import{n as e}from"./index-C6xa0T2Z.js";var t={async getAll(t=``){let n=t?{q:t}:{};return(await e.get(`posts/`,{params:n})).data},async getById(t){return(await e.get(`posts/${t}/`)).data},async create(t){return(await e.post(`posts/`,t)).data},async update(t,n){return(await e.put(`posts/${t}/`,n)).data},async delete(t){return await e.delete(`posts/${t}/`)}};export{t};
