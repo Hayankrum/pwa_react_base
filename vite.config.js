@@ -10,42 +10,21 @@ export default defineConfig({
 
     VitePWA({
       registerType: 'autoUpdate',
-
-      // 🔥 TROCA AQUI
-      strategies: 'generateSW',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
 
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
-
-        navigateFallback: 'index.html',
-
+        navigateFallback: '/pwa_react_base/index.html',
         navigateFallbackDenylist: [/^\/api\//],
-
-        runtimeCaching: [
-          {
-            urlPattern: ({ request }) => request.destination === 'image',
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'images-cache',
-            },
-          },
-          {
-            urlPattern: ({ request }) =>
-              request.destination === 'script' ||
-              request.destination === 'style' ||
-              request.destination === 'document',
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'static-resources',
-            },
-          },
-        ],
+        navigateFallbackAllowlist: [/^\/pwa_react_base\/.*/],
       },
 
       manifest: {
-        name: 'PWA React Base',
-        short_name: 'PWA Base',
-        description: 'Template React com PWA avançada',
+        name: 'Django Blog PWA',
+        short_name: 'Django Blog',
+        description: 'Blog Django com PWA',
         theme_color: '#1a1d26',
         background_color: '#1a1d26',
         display: 'standalone',

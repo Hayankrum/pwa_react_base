@@ -1,40 +1,138 @@
 import { Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Layout from "../components/layout/Layout";
-import Home from "../pages/Home";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
+import ProtectedRoute from "../components/ui/ProtectedRoute";
 
-// páginas normais
-import Pagina1 from "../pages/telas/Pagina1";
-import Pagina2 from "../pages/telas/Pagina2";
-import Pagina3 from "../pages/telas/Pagina3";
-import Pagina4 from "../pages/telas/Pagina4";
-import Pagina5 from "../pages/telas/Pagina5";
+// Lazy loading das páginas
+const Login = lazy(() => import("../pages/usuario/Login"));
+const Register = lazy(() => import("../pages/usuario/Register"));
+const Profile = lazy(() => import("../pages/usuario/Profile"));
+const ChangePassword = lazy(() => import("../pages/usuario/ChangePassword"));
+const PublicProfile = lazy(() => import("../pages/usuario/PublicProfile"));
 
-// status
-import Offline from "../pages/Status/Offline";
-import NotFound from "../pages/Status/NotFound";
-import Loading from "../pages/Status/Loading";
+// Status pages
+const Offline = lazy(() => import("../pages/Status/Offline"));
+const NotFound = lazy(() => import("../pages/Status/NotFound"));
+
+// Posts
+const PostList = lazy(() => import("../pages/posts/PostList"));
+const PostDetail = lazy(() => import("../pages/posts/PostDetail"));
+const PostForm = lazy(() => import("../pages/posts/PostForm"));
 
 export default function AppRoutes() {
   return (
     <Routes>
-
-      {/* LAYOUT PRINCIPAL */}
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="pagina1" element={<Pagina1 />} />
-        <Route path="pagina2" element={<Pagina2 />} />
-        <Route path="pagina3" element={<Pagina3 />} />
-        <Route path="pagina4" element={<Pagina4 />} />
-        <Route path="pagina5" element={<Pagina5 />} />
+        <Route
+          index
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <PostList />
+            </Suspense>
+          }
+        />
 
-        {/* status (RELATIVO) */}
-        <Route path="offline" element={<Offline />} />
-        <Route path="loading" element={<Loading />} />
+        <Route
+          path="login"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Register />
+            </Suspense>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Profile />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/:userId"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <PublicProfile />
+            </Suspense>
+          }
+        />
+        <Route
+          path="change-password"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingSpinner />}>
+                <ChangePassword />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
 
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
+        <Route
+          path="posts"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <PostList />
+            </Suspense>
+          }
+        />
+        <Route
+          path="posts/create"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingSpinner />}>
+                <PostForm />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="posts/:id"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <PostDetail />
+            </Suspense>
+          }
+        />
+        <Route
+          path="posts/:id/edit"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingSpinner />}>
+                <PostForm />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="offline"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Offline />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <NotFound />
+            </Suspense>
+          }
+        />
       </Route>
-
     </Routes>
   );
 }

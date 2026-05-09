@@ -110,5 +110,15 @@ setCatchHandler(async ({ event }) => {
     return caches.match('/pwa_react_base/index.html')
   }
 
+  // Para recursos estáticos (JS, CSS), tentar buscar da rede primeiro
+  if (event.request.destination === 'script' || event.request.destination === 'style') {
+    try {
+      return await fetch(event.request)
+    } catch (error) {
+      console.warn('[SW] Failed to fetch resource, trying cache:', event.request.url)
+      return caches.match(event.request)
+    }
+  }
+
   return Response.error()
 })

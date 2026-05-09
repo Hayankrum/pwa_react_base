@@ -3,10 +3,10 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import "./styles/global.css"
 
-// 🔥 PWA - atualização automática SEM prompt
+// 🔥 PWA - Sistema de controle do worker
 import { registerSW } from 'virtual:pwa-register'
 
-// força atualizar sempre que tiver nova versão
+// Sistema de controle do service worker
 registerSW({
   immediate: true,
 
@@ -15,13 +15,15 @@ registerSW({
   },
 
   onRegistered(swRegistration) {
-    console.log("✅ Service Worker registrado:", swRegistration)
+    console.log("✅ Service Worker registrado", swRegistration)
   },
 
   onRegisterError(error) {
-    console.error("❌ Erro ao registrar SW:", error)
+    console.error("❌ Erro ao registrar SW", error)
   }
 })
+
+console.log("🚀 Django Blog PWA inicializado")
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
